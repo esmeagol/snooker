@@ -1,0 +1,29 @@
+# Snooker Ball Detection Dataset
+path: ./data/yolo_dataset  # dataset root dir
+train: train/images  # train images (relative to 'path')
+val: val/images  # val images (relative to 'path')
+test: test/images  # test images (optional)
+
+# Classes
+names:
+  0: cue_ball
+  1: red_ball
+  2: yellow_ball
+  3: green_ball
+  4: brown_ball
+  5: blue_ball
+  6: pink_ball
+  7: black_ball
+  8: white_ball
+  9: player
+
+# Download script/URL (optional)
+download: null
+
+# License (optional)
+license: null
+
+authors:
+  - Your Name
+
+date: 2025-06-04  # today's date

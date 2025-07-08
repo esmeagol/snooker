@@ -1,0 +1,51 @@
+# Exclude data and videos directories
+/data/
+/videos/
+/snooker_detection/
+
+# Common Python files to ignore
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite
+
+# Local development settings
+.env
+.env.local
+
+# Output files from scripts
+output*.mp4
+*.mp4
