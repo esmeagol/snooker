@@ -131,8 +131,20 @@ def main():
     # Scale points back to original size
     points = points * 2
     
-    # Process the video with 500x1000 resolution
-    process_video(args.input_video, args.output, points, output_size=(500, 1000))
+    # Get video dimensions to calculate output size
+    cap = cv2.VideoCapture(args.input_video)
+    width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    cap.release()
+    
+    # Calculate output dimensions: 70% of the smaller dimension for width, 2x for height
+    p = int(0.7 * min(width, height))
+    output_size = (p, 2 * p)
+    print(f"Input resolution: {width}x{height}")
+    print(f"Output resolution: {output_size[0]}x{output_size[1]}")
+    
+    # Process the video with calculated resolution
+    process_video(args.input_video, args.output, points, output_size=output_size)
 
 if __name__ == "__main__":
     main()
