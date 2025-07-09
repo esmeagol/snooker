@@ -2,6 +2,11 @@
 /data/
 /videos/
 /snooker_detection/
+debug/
+test_data/
+output/
+test_output/
+test_output_2/
 
 # Common Python files to ignore
 __pycache__/
