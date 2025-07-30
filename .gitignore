@@ -1,4 +1,7 @@
 # Exclude data and videos directories
+youtube_cookies.txt
+youtube_urls.txt
+.DS_Store
 /data/
 /videos/
 /snooker_detection/

@@ -1,4 +1,7 @@
-opencv-python
-numpy
-transformers
-torch
+opencv-python>=4.5.0
+numpy>=1.19.0
+transformers>=4.0.0
+torch>=1.8.0
+yt-dlp>=2023.3.4
+pyyaml>=6.0
+tqdm>=4.65.0

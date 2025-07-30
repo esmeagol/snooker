@@ -6,7 +6,9 @@ This project demonstrates how to train a YOLOv8 model to detect snooker balls an
 
 ```
 snooker/
-├── data/
+├── data/                   # Data directory
+│   ├── raw_videos/         # Downloaded YouTube videos
+│   ├── processed_videos/   # Preprocessed videos
 │   ├── raw_frames/         # Extracted video frames
 │   ├── annotated_frames/   # Labeled frames with annotations
 │   └── yolo_dataset/       # YOLO-formatted dataset
@@ -19,6 +21,12 @@ snooker/
 │       └── test/           # Test set
 │           ├── images/     # Test images
 │           └── labels/     # Test labels
+├── snooker_pipeline/       # Training data generation pipeline
+│   ├── __init__.py
+│   ├── cli.py             # Command-line interface
+│   ├── pipeline.py        # Main pipeline implementation
+│   ├── video_processor.py # Video processing utilities
+│   └── example_config.yaml # Example configuration
 ├── videos/                 # Input videos
 ├── extract_frames.py       # Script to extract frames from videos
 ├── split_dataset.py        # Script to split dataset
