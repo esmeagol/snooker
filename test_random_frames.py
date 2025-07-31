@@ -85,7 +85,7 @@ def main():
     model.model.eval()
     
     # Get random frames
-    frames_dir = '/Users/abhinavrai/Playground/snooker/data/raw_frames'
+    frames_dir = '/Users/abhinavrai/Playground/snooker/training_data/raw_frames'
     print(f"Sampling {SAMPLE_SIZE} random frames from {frames_dir}...")
     random_frames = get_random_frames(frames_dir, SAMPLE_SIZE)
     

@@ -1,12 +1,11 @@
 # Exclude data and videos directories
-youtube_cookies.txt
-youtube_urls.txt
+training_data/youtube_cookies.txt
 .DS_Store
-/data/
+/training_data/
 /videos/
 /snooker_detection/
 debug/
-test_data/
+test_training_data/
 output/
 test_output/
 test_output_2/

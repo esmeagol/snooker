@@ -1,0 +1,26 @@
+# Snooker Training Data Pipeline Configuration
+
+# Input/Output directories
+raw_videos_dir: "training_data/step_0_raw_videos"          # Directory to store downloaded YouTube videos
+processed_videos_dir: "training_data/step_1_processed_videos"  # Directory for preprocessed videos
+output_dir: "training_data/step_2_training_dataset"         # Output directory for the final dataset
+
+# YouTube download settings
+youtube_urls: "training_data/youtube_urls.txt"  # File containing YouTube URLs (one per line)
+cookies_file: "training_data/youtube_cookies.txt"  # Optional: Path to cookies file for YouTube
+
+# Video processing settings
+video_processing:
+  target_fps: 20  # Target FPS for output videos (None to keep original)
+  output_resolution: 
+    width: 640
+    height: 640
+
+# Frame extraction settings
+frame_interval: 20  # Extract one frame every N frames
+max_frames_per_video: 100  # Maximum number of frames to extract per video
+
+# Dataset split ratios (should sum to 1.0)
+train_ratio: 0.7
+val_ratio: 0.15
+test_ratio: 0.15

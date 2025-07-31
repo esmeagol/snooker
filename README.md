@@ -6,7 +6,7 @@ This project demonstrates how to train a YOLOv8 model to detect snooker balls an
 
 ```
 snooker/
-├── data/                   # Data directory
+├── training_data/                   # Data directory
 │   ├── raw_videos/         # Downloaded YouTube videos
 │   ├── processed_videos/   # Preprocessed videos
 │   ├── raw_frames/         # Extracted video frames
@@ -21,7 +21,7 @@ snooker/
 │       └── test/           # Test set
 │           ├── images/     # Test images
 │           └── labels/     # Test labels
-├── snooker_pipeline/       # Training data generation pipeline
+├── training_pipeline/       # Training data generation pipeline
 │   ├── __init__.py
 │   ├── cli.py             # Command-line interface
 │   ├── pipeline.py        # Main pipeline implementation
@@ -54,7 +54,7 @@ snooker/
    ```bash
    python extract_frames.py
    ```
-   This will extract frames from all videos in the `videos` directory and save them to `data/raw_frames`.
+   This will extract frames from all videos in the `videos` directory and save them to `training_data/raw_frames`.
 
 2. **Label the Frames**
    Use a tool like LabelImg to annotate the frames. Install it with:
@@ -63,8 +63,8 @@ snooker/
    labelImg
    ```
    - Set the output format to YOLO
-   - Open the `data/raw_frames` directory
-   - Save annotations to `data/annotated_frames`
+   - Open the `training_data/raw_frames` directory
+   - Save annotations to `training_data/annotated_frames`
 
 3. **Split the Dataset**
    Run the following command to split the dataset into training, validation, and test sets:

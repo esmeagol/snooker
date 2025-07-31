@@ -12,7 +12,7 @@ def train_model():
     
     # Training configuration
     args = {
-        'data': 'data/snooker_dataset/snooker_dataset.yaml',
+        'data': 'training_data/snooker_dataset/snooker_dataset.yaml',
         'epochs': 50,  # Reduced epochs for stability
         'imgsz': 640,
         'batch': 4,  # Reduced batch size for MPS stability
@@ -56,7 +56,7 @@ def train_model():
 
 if __name__ == "__main__":
     print("Starting YOLOv8 training for snooker ball detection...")
-    print("Training data: data/snooker_dataset")
+    print("Training data: training_data/snooker_dataset")
     print("Model will be saved in: runs/detect/yolov8n_snooker")
     print("\nTraining parameters:")
     print("- Epochs: 100")

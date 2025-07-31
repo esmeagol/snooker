@@ -1,5 +1,5 @@
 # Snooker Ball Detection Dataset
-path: ./data/yolo_dataset  # dataset root dir
+path: ./training_data/yolo_dataset  # dataset root dir
 train: train/images  # train images (relative to 'path')
 val: val/images  # val images (relative to 'path')
 test: test/images  # test images (optional)

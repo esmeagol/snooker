@@ -16,7 +16,7 @@ A unified pipeline for generating training data for snooker object detection mod
 1. Clone this repository:
    ```bash
    git clone <repository-url>
-   cd snooker/snooker_pipeline
+   cd snooker/training_pipeline
    ```
 
 2. Install the required dependencies:
@@ -42,7 +42,7 @@ A unified pipeline for generating training data for snooker object detection mod
 
 3. **Run the pipeline**:
    ```bash
-   python -m snooker_pipeline.cli --config your_config.yaml
+   python -m training_pipeline.cli --config your_config.yaml
    ```
 
 ### Command Line Options
@@ -71,11 +71,11 @@ options:
 
 1. Create a config file (`config.yaml`):
    ```yaml
-   raw_videos_dir: "data/raw_videos"
-   processed_videos_dir: "data/processed_videos"
-   output_dir: "data/dataset"
-   youtube_urls: "youtube_urls.txt"
-   cookies_file: "youtube_cookies.txt"
+   raw_videos_dir: "training_data/raw_videos"
+   processed_videos_dir: "training_data/processed_videos"
+   output_dir: "training_data/dataset"
+   youtube_urls: "training_data/youtube_urls.txt"
+   cookies_file: "training_data/youtube_cookies.txt"
    target_fps: 30
    min_table_visibility: 0.4
    frame_interval: 10
@@ -84,7 +84,7 @@ options:
    test_ratio: 0.1
    ```
 
-2. Create a file with YouTube URLs (`youtube_urls.txt`):
+2. Create a file with YouTube URLs (`training_data/youtube_urls.txt`):
    ```
    https://www.youtube.com/watch?v=EXAMPLE1
    https://www.youtube.com/watch?v=EXAMPLE2
@@ -92,7 +92,7 @@ options:
 
 3. Run the pipeline:
    ```bash
-   python -m snooker_pipeline.cli --config config.yaml
+   python -m training_pipeline.cli --config config.yaml
    ```
 
 ## Pipeline Steps
@@ -105,7 +105,7 @@ options:
 ## Output Structure
 
 ```
-data/
+training_data/
 ├── raw_videos/          # Downloaded YouTube videos
 ├── processed_videos/    # Preprocessed videos
 └── dataset/             # Final dataset

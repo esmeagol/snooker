@@ -55,10 +55,20 @@ class SnookerTrainingPipeline:
             logger.error("yt-dlp is not installed. Please install it with: pip install yt-dlp")
             raise
         
-        # Build the yt-dlp command
-        cmd = [
+        # Read all URLs from the file
+        try:
+            with open(urls_file, 'r') as f:
+                urls = [line.strip() for line in f if line.strip()]
+        except Exception as e:
+            logger.error(f"Error reading URLs file: {e}")
+            raise
+        
+        # Create a temporary file to store successful downloads
+        temp_file = f"{urls_file}.tmp"
+        
+        # Base command without the input file
+        base_cmd = [
             'yt-dlp',
-            '-a', urls_file,
             '-f', 'bestvideo[height<=1080]+bestaudio/best[height<=1080]/best',
             '--merge-output-format', 'mp4',
             '--output', os.path.join(self.config['raw_videos_dir'], '%(id)s.%(ext)s'),
@@ -69,15 +79,61 @@ class SnookerTrainingPipeline:
         
         # Add cookies if specified in config
         if 'cookies_file' in self.config and self.config['cookies_file']:
-            cmd.extend(['--cookies', self.config['cookies_file']])
+            base_cmd.extend(['--cookies', self.config['cookies_file']])
         
-        # Run the command
+        # Process each URL individually
+        success_count = 0
+        failed_urls = []
+        
+        for url in urls:
+            try:
+                # Create a temporary file with just this URL
+                with open(temp_file, 'w') as f:
+                    f.write(f"{url}\n")
+                
+                # Build the command for this URL
+                cmd = base_cmd.copy()
+                cmd.extend(['-a', temp_file])
+                
+                # Run the command
+                result = subprocess.run(cmd, capture_output=True, text=True)
+                
+                if result.returncode == 0:
+                    success_count += 1
+                    logger.debug(f"Successfully processed: {url}")
+                else:
+                    # If download fails, log the error and add to failed URLs
+                    error_msg = result.stderr or "Unknown error"
+                    logger.warning(f"Failed to download {url}: {error_msg}")
+                    failed_urls.append(url)
+            except Exception as e:
+                logger.warning(f"Error processing {url}: {str(e)}")
+                failed_urls.append(url)
+        
+        # Clean up temporary file
         try:
-            subprocess.run(cmd, check=True)
-            logger.info("Video download completed successfully")
-        except subprocess.CalledProcessError as e:
-            logger.error(f"Error downloading videos: {e}")
-            raise
+            if os.path.exists(temp_file):
+                os.remove(temp_file)
+        except Exception as e:
+            logger.warning(f"Error cleaning up temporary file: {e}")
+        
+        # If there were any failures, update the URLs file
+        if failed_urls:
+            # Get the successful URLs (original list minus failed ones)
+            successful_urls = [url for url in urls if url not in failed_urls]
+            
+            # Write the successful URLs back to the file
+            try:
+                with open(urls_file, 'w') as f:
+                    f.write('\n'.join(successful_urls) + '\n')
+                logger.warning(f"Removed {len(failed_urls)} failed URLs from {urls_file}")
+            except Exception as e:
+                logger.error(f"Error updating URLs file: {e}")
+        
+        # Log summary
+        total = len(urls)
+        failed = len(failed_urls)
+        logger.info(f"Download completed: {success_count} succeeded, {failed} failed out of {total} URLs")
     
     def preprocess_videos(self):
         """Preprocess downloaded videos to extract relevant frames."""
