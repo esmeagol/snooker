@@ -108,18 +108,29 @@ class SnookerTrainingPipeline:
             self._process_video(input_path, output_path)
     
     def _process_video(self, input_path: str, output_path: str):
-        """Process a single video file to extract relevant frames.
+        """Process a single video file to extract relevant frames using FFmpeg.
         
-        This is a wrapper around the existing process_video function.
+        This is a wrapper around the process_video function.
         """
         from .video_processor import process_video
-        max_frames = self.config.get('max_frames_per_video', 120)
-        target_fps = self.config.get('target_fps')
+        
+        # Get video processing settings with defaults
+        video_config = self.config.get('video_processing', {})
+        target_fps = video_config.get('target_fps')
+        debug = self.config.get('debug', False)
+        
+        # Get output resolution with defaults
+        output_res = video_config.get('output_resolution', {})
+        output_width = output_res.get('width', 640)
+        output_height = output_res.get('height', 640)
+        
         process_video(
             input_path=input_path, 
             output_path=output_path,
             target_fps=target_fps,
-            max_frames=max_frames
+            output_width=output_width,
+            output_height=output_height,
+            debug=debug
         )
     
     def _get_split_ratios(self):
@@ -156,10 +167,13 @@ class SnookerTrainingPipeline:
         frame_interval = self.config.get('frame_interval', 10)
         logger.info(f"Using frame interval: {frame_interval}")
         
+        max_frames = self.config.get('max_frames_per_video', 120)
+        logger.info(f"Using max frames to extract per video: {max_frames}")
+        
         # Extract frames from all videos
         for video_file in tqdm(video_files, desc="Extracting frames"):
             video_path = os.path.join(self.config['processed_videos_dir'], video_file)
-            self._extract_frames_from_video(video_path, temp_dir, frame_interval)
+            self._extract_frames_from_video(video_path, temp_dir, frame_interval, max_frames)
             
         # Store the temporary directory path for later use
         self.temp_frames_dir = temp_dir
